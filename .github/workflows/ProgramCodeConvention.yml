@@ -1,0 +1,24 @@
+name: Python Program Code Convention Check
+
+on: [push]
+
+jobs:
+  flake8_linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Flake8 Linter
+        run: pip install flake8
+
+      - name: Lint ProgramCode.py (Success Check)
+        run: flake8 ProgramCode.py
+
+      - name: Lint ProgramCodeModified.py (Failure Check)
+        run: flake8 ProgramCodeModified.py
