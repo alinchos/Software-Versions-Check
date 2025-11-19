@@ -1,0 +1,24 @@
+name: Schema Code Convention Check
+
+on: [push]
+
+jobs:
+  sql_linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install SQLFluff Linter
+        run: pip install sqlfluff
+
+      - name: Lint DataSchema.sql (Success Check)
+        run: sqlfluff lint DataSchema.sql --dialect postgres
+
+      - name: Lint Modified DataSchema.sql (Failure Check)
+        run: sqlfluff lint DataSchemaModified.sql --dialect postgres
