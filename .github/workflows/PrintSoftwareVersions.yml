@@ -1,0 +1,26 @@
+name: Print Software Versions
+
+# Запускається при кожному push
+on: [push]
+
+jobs:
+  # 1. Робота: Виведення версій ПЗ Рівня Обробки (Node.js та Python)
+  PrintSoftwareVersions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print Node.js Version
+        run: node --version
+      - name: Print Python Version
+        run: python --version
+
+  # 2. Робота: Виведення версій СКБД (PostgreSQL та MongoDB)
+  PrintDBMSVersions:
+    runs-on: ubuntu-latest
+    needs: [PrintSoftwareVersions] # Запускається після першої роботи
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print PostgreSQL Version
+        run: psql --version
+      - name: Print MongoDB Version
+        run: mongod --version
